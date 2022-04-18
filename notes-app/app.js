@@ -1,3 +1,3 @@
-require('./utils.js');
+const calculate = require('./utils.js');
 
-console.log('App.js');
+console.log(calculate(1, 2));
