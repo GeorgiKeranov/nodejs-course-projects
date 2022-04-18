@@ -1,0 +1,2 @@
+Hello world from Node.js!
+This is appended text!
