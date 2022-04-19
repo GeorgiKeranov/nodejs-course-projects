@@ -1,3 +1,8 @@
-const calculate = require('./utils.js');
+import validator from 'validator';
+import {email, note} from './notes.js';
+import fs from 'fs';
 
-console.log(calculate(1, 2));
+if (validator.isEmail(email)) {
+    fs.appendFileSync('notes.txt', email + ' wrote:\n');
+    fs.appendFileSync('notes.txt', note + '\n');
+}

@@ -1,2 +1,2 @@
-Hello world from Node.js!
-This is appended text!
+example@example.com wrote:
+Example note
