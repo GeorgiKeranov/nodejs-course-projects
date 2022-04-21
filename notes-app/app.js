@@ -1,5 +1,5 @@
 import yargs from 'yargs';
-import { addNote, removeNote, listNotes } from './notes.js';
+import { addNote, removeNote, listNotes, readNote } from './notes.js';
 
 const yargsHelper = yargs(process.argv.slice(2)); 
 
@@ -39,7 +39,7 @@ yargsHelper.command({
     description: 'Read a note by the title',
     builder: { title: builderFields.title },
     handler(argv) {
-        console.log('Reading a note:', argv.title);
+        readNote(argv.title);
     }
 });
 

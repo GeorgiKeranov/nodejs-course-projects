@@ -58,6 +58,19 @@ function listNotes() {
     }
 }
 
+function readNote(title) {
+    const notes = getNotes();
+
+    const noteFound = notes.filter(note => note.title === title);
+
+    if (noteFound.length) {
+        console.log(chalk.green('Note found:'));
+        console.log(noteFound[0].note);
+    } else {
+        console.log(chalk.red('Note not found'));
+    }
+}
+
 function getNotes() {
     try {
         const notesJSON = fs.readFileSync(notesFilePath);
@@ -76,4 +89,4 @@ function saveNotes(content) {
     }
 }
 
-export { addNote, removeNote, listNotes };
+export { addNote, removeNote, listNotes, readNote };
