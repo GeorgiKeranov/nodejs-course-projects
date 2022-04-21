@@ -1,21 +1,45 @@
 import fs from 'fs';
 
+const notesFilePath = './notes.json';
+
 function addNote(title, note) {
     const currentNotes = getNotes();
 
-    currentNotes.push({
-        title: title,
-        note: note
-    });
+    let noteIsNotExisting = true;
+    for (let currentNote of currentNotes) {
+        if (currentNote.title === title) {
+            currentNote.note = note;
+            noteIsNotExisting = false;
+            break;
+        }
+    }
 
-    fs.writeFileSync('notes.json', currentNotes);
+    if (noteIsNotExisting) {
+        currentNotes.push({
+            title: title,
+            note: note
+        });
+    }
+    
+    saveNotes(currentNotes);
 }
 
 function getNotes() {
-    const notesJSON = fs.readFileSync('notes.json');
-    const notes = JSON.parse(notesJSON);
-
-    return notes;
+    try {
+        const notesJSON = fs.readFileSync(notesFilePath);
+        return JSON.parse(notesJSON);
+    } catch(error) {
+        return [];
+    }
 }
 
-export { addNote, getNotes };
+function saveNotes(content) {
+    try {
+        const contentJSON = JSON.stringify(content);
+        fs.writeFileSync('notes.json', contentJSON);
+    } catch(error) {
+        console.log(error);
+    }
+}
+
+export { addNote };

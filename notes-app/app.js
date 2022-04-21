@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import yargs from 'yargs';
+import { addNote } from './notes.js';
 
 const yargsHelper = yargs(process.argv.slice(2)); 
 
@@ -21,9 +22,7 @@ yargsHelper.command({
     description: 'Add a note',
     builder: builderFields,
     handler: function(argv) {
-        console.log('Adding a note:');
-        console.log('Title:', argv.title),
-        console.log('Note:', argv.note)
+        addNote(argv.title, argv.note);
     }
 });
 
