@@ -1,0 +1,5 @@
+# NPM generated files and folders
+node_modules
+
+# Visual studio generated file for workspace
+*.code-workspace
