@@ -7,7 +7,7 @@ const book = {
 
 const bookJSON = JSON.stringify(book);
 
-fs.writeFileSync('book.json', bookJSON);
+fs.writeFileSync('1-json-book.json', bookJSON);
 
 const bookJSONFromFile = fs.readFileSync('1-json-book.json');
 const bookFromFile = JSON.parse(bookJSONFromFile);
