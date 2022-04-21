@@ -1,5 +1,5 @@
 import yargs from 'yargs';
-import { addNote, removeNote } from './notes.js';
+import { addNote, removeNote, listNotes } from './notes.js';
 
 const yargsHelper = yargs(process.argv.slice(2)); 
 
@@ -47,7 +47,7 @@ yargsHelper.command({
     command: 'list',
     description: 'List the notes',
     handler() {
-        console.log('Listing the notes');
+        listNotes();
     }
 });
 

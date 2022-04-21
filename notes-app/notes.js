@@ -29,6 +29,35 @@ function addNote(title, note) {
     saveNotes(currentNotes);
 }
 
+function removeNote(title) {
+    const notes = getNotes();
+    const notesToKeep = notes.filter(note => note.title !== title);
+    
+    if (notes.length !== notesToKeep.length) {
+        saveNotes(notesToKeep);
+
+        console.log(chalk.green('Note is removed!'));
+    } else {
+        console.log(chalk.red('Note is not existing!'));
+    }
+}
+
+function listNotes() {
+    const notes = getNotes();
+    
+    if (!notes.length) {
+        console.log(chalk.red('You have no notes!'));
+        return;
+    }
+
+    console.log(chalk.green('Your notes:'));
+
+    for (let note of notes) {
+        console.log(chalk.magenta(note.title));
+        console.log(chalk.magenta(note.note), '\n');
+    }
+}
+
 function getNotes() {
     try {
         const notesJSON = fs.readFileSync(notesFilePath);
@@ -47,17 +76,4 @@ function saveNotes(content) {
     }
 }
 
-function removeNote(title) {
-    const notes = getNotes();
-    const notesToKeep = notes.filter(note => note.title !== title);
-    
-    if (notes.length !== notesToKeep.length) {
-        saveNotes(notesToKeep);
-
-        console.log(chalk.green('Note is removed!'));
-    } else {
-        console.log(chalk.red('Note is not existing!'));
-    }
-}
-
-export { addNote, removeNote };
+export { addNote, removeNote, listNotes };
