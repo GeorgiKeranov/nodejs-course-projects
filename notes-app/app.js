@@ -20,7 +20,7 @@ yargsHelper.command({
     command: 'add',
     description: 'Add a note',
     builder: builderFields,
-    handler: function(argv) {
+    handler(argv) {
         addNote(argv.title, argv.note);
     }
 });
@@ -29,7 +29,7 @@ yargsHelper.command({
     command: 'remove',
     description: 'Remove a note by the title',
     builder: { title: builderFields.title },
-    handler: function(argv) {
+    handler(argv) {
         removeNote(argv.title);
     }
 });
@@ -38,7 +38,7 @@ yargsHelper.command({
     command: 'read',
     description: 'Read a note by the title',
     builder: { title: builderFields.title },
-    handler: function(argv) {
+    handler(argv) {
         console.log('Reading a note:', argv.title);
     }
 });
@@ -46,7 +46,7 @@ yargsHelper.command({
 yargsHelper.command({
     command: 'list',
     description: 'List the notes',
-    handler: function() {
+    handler() {
         console.log('Listing the notes');
     }
 });
