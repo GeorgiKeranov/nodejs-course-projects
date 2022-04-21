@@ -3,20 +3,55 @@ import yargs from 'yargs';
 
 const yargsHelper = yargs(process.argv.slice(2)); 
 
-yargsHelper.command('add', 'Add a note', function() {
-    console.log('Adding a note');
+const builderFields = {
+    title: {
+        describe: 'Title of the note',
+        demandOption: true,
+        type: 'string'
+    },
+    note: {
+        describe: 'The note that you want to add',
+        demandOption: true,
+        type: 'string'
+    },
+
+};
+
+yargsHelper.command({
+    command: 'add',
+    description: 'Add a note',
+    builder: builderFields,
+    handler: function(argv) {
+        console.log('Adding a note:');
+        console.log('Title:', argv.title),
+        console.log('Note:', argv.note)
+    }
 });
 
-yargsHelper.command('remove', 'Remove a note', function() {
-    console.log('Removing a note');
+yargsHelper.command({
+    command: 'remove',
+    description: 'Remove a note by the title',
+    builder: { title: builderFields.title },
+    handler: function(argv) {
+        console.log('Removing a note:', argv.title);
+    }
 });
 
-yargsHelper.command('read', 'Read a note', function() {
-    console.log('Reading a note');
+yargsHelper.command({
+    command: 'read',
+    description: 'Read a note by the title',
+    builder: { title: builderFields.title },
+    handler: function(argv) {
+        console.log('Reading a note:', argv.title);
+    }
 });
 
-yargsHelper.command('list', 'List the notes', function() {
-    console.log('Listing the notes');
+yargsHelper.command({
+    command: 'list',
+    description: 'List the notes',
+    handler: function(argv) {
+        console.log('Listing the notes');
+    }
 });
 
-console.log(yargsHelper.argv);
+yargsHelper.argv;
