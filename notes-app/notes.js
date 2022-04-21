@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import fs from 'fs';
 
 const notesFilePath = './notes.json';
@@ -10,6 +11,8 @@ function addNote(title, note) {
         if (currentNote.title === title) {
             currentNote.note = note;
             noteIsNotExisting = false;
+
+            console.log(chalk.green('The existing note is updated!'));
             break;
         }
     }
@@ -19,6 +22,8 @@ function addNote(title, note) {
             title: title,
             note: note
         });
+
+        console.log(chalk.green('The new note is added!'));
     }
     
     saveNotes(currentNotes);
@@ -42,4 +47,17 @@ function saveNotes(content) {
     }
 }
 
-export { addNote };
+function removeNote(title) {
+    const notes = getNotes();
+    const notesToKeep = notes.filter(note => note.title !== title);
+    
+    if (notes.length !== notesToKeep.length) {
+        saveNotes(notesToKeep);
+
+        console.log(chalk.green('Note is removed!'));
+    } else {
+        console.log(chalk.red('Note is not existing!'));
+    }
+}
+
+export { addNote, removeNote };
