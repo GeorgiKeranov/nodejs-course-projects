@@ -63,7 +63,7 @@ function readNote(title) {
     const noteFound = notes.find(note => note.title === title);
 
     if (noteFound) {
-        console.log(chalk.green('Note found:'));
+        console.log(chalk.green(noteFound.ttile));
         console.log(noteFound.note);
     } else {
         console.log(chalk.red('Note not found'));
