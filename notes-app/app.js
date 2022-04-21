@@ -13,8 +13,7 @@ const builderFields = {
         describe: 'The note that you want to add',
         demandOption: true,
         type: 'string'
-    },
-
+    }
 };
 
 yargsHelper.command({
@@ -49,7 +48,7 @@ yargsHelper.command({
 yargsHelper.command({
     command: 'list',
     description: 'List the notes',
-    handler: function(argv) {
+    handler: function() {
         console.log('Listing the notes');
     }
 });
