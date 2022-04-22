@@ -11,15 +11,38 @@ const mapboxApiUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + plac
     '.json?access_token=pk.eyJ1IjoiZ2tlcmFub3YiLCJhIjoiY2wyYWt2dzJrMDBtYjNjcnozYnczaWtpciJ9.rOci68dTvbiZzIVPKznnXw';
 
 request({ url: mapboxApiUrl, json: true }, (error, response) => {
-    const responseBody = response.body;
-    const placeCordinates = responseBody.features[0].center;
+    if (error) {
+        console.log(error);
+        return;
+    }
+
+    const features = response.body.features;
+
+    if (!features.length) {
+        console.log('There are not found places that match your search.');
+        return;
+    }
+
+    const placeCordinates = features[0].center;
     const lng = placeCordinates[0];
     const lat = placeCordinates[1];
     
     const weatherApiUrl = 'http://api.weatherstack.com/current?access_key=8dd121b76715aba773d70afa5db41a05&query=' + lat +',' + lng;
     
     request({ url: weatherApiUrl, json: true }, (error, response) => {
-        const currentWeather = response.body.current;
+        if (error) {
+            console.log(error);
+            return;
+        }
+
+        const responseBody = response.body;
+
+        if (responseBody.hasOwnProperty('error')) {
+            console.log(responseBody.error.info);
+            return;
+        }    
+
+        const currentWeather = responseBody.current;
     
         const currentTemperature = currentWeather.temperature;
         const currentTemperatureFeelsLike = currentWeather.feelslike;
