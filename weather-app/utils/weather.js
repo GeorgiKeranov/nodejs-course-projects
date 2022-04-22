@@ -1,22 +1,20 @@
 const request = require('request');
 
-function weather(placeData, callback) {
-    const url = 'http://api.weatherstack.com/current?access_key=8dd121b76715aba773d70afa5db41a05&query=' + placeData.lat +',' + placeData.lng;
+function weather({ lat, lng }, callback) {
+    const url = 'http://api.weatherstack.com/current?access_key=8dd121b76715aba773d70afa5db41a05&query=' + lat +',' + lng;
         
-    request({ url: url, json: true }, (error, response) => {
+    request({ url, json: true }, (error, { body }) => {
         if (error) {
             callback(error);
             return;
         }
 
-        const responseBody = response.body;
-
-        if (responseBody.hasOwnProperty('error')) {
-            callback(responseBody.error.info);
+        if (body.hasOwnProperty('error')) {
+            callback(body.error.info);
             return;
         }    
 
-        const currentWeather = responseBody.current;
+        const currentWeather = body.current;
               
         callback(false, {
             description: currentWeather.weather_descriptions[0],
