@@ -24,8 +24,8 @@ function geocode(keyWords, callback) {
         const lat = placeCordinates[1];
 
         callback(false, {
-            lat: lat,
-            lng: lng
+            lat,
+            lng
         });
     });
 }
