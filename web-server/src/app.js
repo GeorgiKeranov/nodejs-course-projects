@@ -1,11 +1,18 @@
 const path = require('path');
 const express = require('express');
+const hbs = require('hbs');
 
 const app = express();
+
+// Define the root directory to be the parent one of that file
 const rootDirectory = path.join(__dirname, '..');
 
-app.set('views', rootDirectory + '/views')
+// Setup template engine and templates directory
+app.set('views', rootDirectory + '/views/templates');
 app.set('view engine', 'hbs');
+hbs.registerPartials(rootDirectory + '/views/partials');
+
+// Setup static files directory
 app.use(express.static(rootDirectory + '/public'));
 
 app.get('', (req, res) => {
@@ -15,7 +22,7 @@ app.get('', (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-    res.send('About page!');
+    res.render('about');
 });
 
 app.get('/api', (req, res) => {
