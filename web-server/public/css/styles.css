@@ -1,3 +1,57 @@
+html, body {
+    min-height: 100vh;
+}
+
+body {
+    font-family: arial;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.header {
+    margin-bottom: 40px;
+}
+
+.main {
+    flex-grow: 1;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
 h1 {
-    color: blue;
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 25px;
+}
+
+.navigation {
+    margin: 0 -10px;
+}
+
+.navigation a {
+    color: gray;
+    font-size: 20px;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: opacity .3s;
+}
+
+.navigation a:hover {
+    opacity: .4;
+}
+
+.footer {
+    color: gray;
+}
+
+.footer .container {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
 }
