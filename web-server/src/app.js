@@ -31,6 +31,10 @@ app.get('/api', (req, res) => {
     });
 });
 
+app.get('*', (req, res) => {
+    res.render('404');
+});
+
 app.listen(3000, () => {
     console.log('Server is up and running on port 3000.')
 });
