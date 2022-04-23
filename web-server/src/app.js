@@ -1,6 +1,8 @@
 const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
+const geocode = require('./utils/geocode.js');
+const weather = require('./utils/weather.js');
 
 const app = express();
 
@@ -25,9 +27,29 @@ app.get('/about', (req, res) => {
     res.render('about');
 });
 
-app.get('/api', (req, res) => {
-    res.send({
-        name: 'Hello from JSON'
+app.get('/weather', (req, res) => {
+    const requestQuery = req.query;
+    
+    if (!requestQuery.address) {
+        res.send({
+            error: 'Please provide an "address" property to get the current weather!'
+        });
+
+        return;
+    }
+
+    geocode(requestQuery.address, (error, locationData) => {
+        if (error) {
+            res.send({ error });
+        }
+
+        weather(locationData, (error, currentWeather) => {
+            if (error) {
+                res.send({ error });
+            }
+            
+            res.send(currentWeather);
+        })
     });
 });
 
