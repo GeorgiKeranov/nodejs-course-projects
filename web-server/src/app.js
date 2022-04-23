@@ -2,9 +2,17 @@ const path = require('path');
 const express = require('express');
 
 const app = express();
-const publicDirectoryPath = path.join(__dirname, '../public');
+const rootDirectory = path.join(__dirname, '..');
 
-app.use(express.static(publicDirectoryPath));
+app.set('views', rootDirectory + '/views')
+app.set('view engine', 'hbs');
+app.use(express.static(rootDirectory + '/public'));
+
+app.get('', (req, res) => {
+    res.render('index', {
+        title: 'Hello from dynamic title'
+    });
+});
 
 app.get('/about', (req, res) => {
     res.send('About page!');
