@@ -15,7 +15,7 @@ function weather({ lat, lng }, callback) {
         }    
 
         const currentWeather = body.current;
-              
+        
         callback(false, {
             description: currentWeather.weather_descriptions[0],
             temperature: currentWeather.temperature,

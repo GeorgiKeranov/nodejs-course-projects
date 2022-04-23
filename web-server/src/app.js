@@ -30,22 +30,24 @@ app.get('/about', (req, res) => {
 app.get('/weather', (req, res) => {
     const requestQuery = req.query;
     
-    if (!requestQuery.address) {
+    if (!requestQuery.location) {
         res.send({
-            error: 'Please provide an "address" property to get the current weather!'
+            error: 'The location is empty, please provide location!'
         });
 
         return;
     }
 
-    geocode(requestQuery.address, (error, locationData) => {
+    geocode(requestQuery.location, (error, locationData) => {
         if (error) {
             res.send({ error });
+            return;
         }
 
         weather(locationData, (error, currentWeather) => {
             if (error) {
                 res.send({ error });
+                return;
             }
             
             res.send(currentWeather);
