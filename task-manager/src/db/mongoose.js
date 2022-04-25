@@ -11,15 +11,38 @@ const User = mongoose.model('User', {
     }
 });
 
-const exampleUser = new User({
-    name: 'Georgi',
-    age: 22
+const Task = mongoose.model('Task', {
+    description: {
+        type: String
+    },
+    completed: {
+        type: Boolean
+    }
 });
 
-exampleUser.save()
-    .then(result => {
-        console.log(result);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+// const exampleTask = new Task({
+//     description: 'Clean the dishes',
+//     completed: false
+// });
+
+// exampleTask.save()
+//     .then(result => {
+//         console.log(result);
+//     })
+//     .catch(error => {
+//         console.log(error);
+//     });
+
+const Person = mongoose.model('Person', {
+    name: {
+        type: String
+    },
+    married: {
+        type: Boolean
+    }
+});
+
+const examplePerson = new Person({
+    name: 'Georgi',
+    married: false
+}).save();
