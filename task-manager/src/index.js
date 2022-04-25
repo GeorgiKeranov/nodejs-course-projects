@@ -48,13 +48,7 @@ app.get('/users/:id', async (req, res) => {
 app.patch('/users/:id', async (req, res) => {
     const allowedProperties = ['name', 'email', 'password', 'age'];
     const updatePropertiesRequest = req.body;
-
-    const notAllowedProperties = [];
-    for (propertyName in updatePropertiesRequest) {
-        if (!allowedProperties.includes(propertyName)) {
-            notAllowedProperties.push(propertyName);
-        }
-    }
+    const notAllowedProperties = getPropertiesThatAreNotAllowed(allowedProperties, updatePropertiesRequest);
 
     if (notAllowedProperties.length) {
         return res.status(400).send({
@@ -120,6 +114,48 @@ app.get('/tasks/:id', async (req, res) => {
     }
 });
 
+app.patch('/tasks/:id', async (req, res) => {
+    const allowedProperties = ['description', 'completed'];
+    const updatePropertiesRequest = req.body;
+    const notAllowedProperties = getPropertiesThatAreNotAllowed(allowedProperties, updatePropertiesRequest);
+
+    if (notAllowedProperties.length) {
+        return res.status(400).send({
+            error: 'There are properties that are not allowed to be updated!',
+            notAllowedProperties
+        });
+    }
+    
+    const id = req.params.id;
+    try {
+        const task = await Task.findByIdAndUpdate(id, updatePropertiesRequest, {
+            new: true,
+            runValidators: true
+        });
+    
+        if (!task) {
+            return res.status(400).send({
+                error: 'The task is not found'
+            });
+        }
+    
+        res.send(task);
+    } catch (error) {
+        res.send(error);
+    }
+});
+
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
+
+function getPropertiesThatAreNotAllowed(allowedProperties, properties) {
+    const notAllowedProperties = [];
+    for (propertyName in properties) {
+        if (!allowedProperties.includes(propertyName)) {
+            notAllowedProperties.push(propertyName);
+        }
+    }
+
+    return notAllowedProperties;
+}
