@@ -45,6 +45,43 @@ app.get('/users/:id', async (req, res) => {
     }
 });
 
+app.put('/users/:id', async (req, res) => {
+    const allowedProperties = ['name', 'email', 'password', 'age'];
+    const updatePropertiesRequest = req.body;
+
+    const notAllowedProperties = [];
+    for (propertyName in updatePropertiesRequest) {
+        if (!allowedProperties.includes(propertyName)) {
+            notAllowedProperties.push(propertyName);
+        }
+    }
+
+    if (notAllowedProperties.length) {
+        return res.status(400).send({
+            error: 'There are properties that are not allowed to be updated!',
+            notAllowedProperties
+        });
+    }
+
+    const id = req.params.id;
+    try {
+        const user = await User.findByIdAndUpdate(id, updatePropertiesRequest, {
+            new: true,
+            runValidators: true
+        });
+    
+        if (!user) {
+            return res.status(400).send({
+                error: 'The user is not found'
+            });
+        }
+    
+        res.send(user);
+    } catch (error) {
+        res.send(error);
+    }
+});
+
 app.post('/tasks', async (req, res) => {
     const task = new Task(req.body);
 
