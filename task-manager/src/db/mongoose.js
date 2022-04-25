@@ -4,45 +4,34 @@ mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api');
 
 const User = mongoose.model('User', {
     name: {
-        type: String
+        type: String,
+        required: true
     },
     age: {
-        type: Number
+        type: Number,
+        required: true
     }
 });
 
 const Task = mongoose.model('Task', {
     description: {
-        type: String
+        type: String,
+        required: true
     },
     completed: {
-        type: Boolean
+        type: Boolean,
+        default: false
     }
 });
 
-// const exampleTask = new Task({
-//     description: 'Clean the dishes',
-//     completed: false
-// });
-
-// exampleTask.save()
-//     .then(result => {
-//         console.log(result);
-//     })
-//     .catch(error => {
-//         console.log(error);
-//     });
-
-const Person = mongoose.model('Person', {
-    name: {
-        type: String
-    },
-    married: {
-        type: Boolean
-    }
+const exampleTask = new Task({
+    description: 'Cook the dinner',
 });
 
-const examplePerson = new Person({
-    name: 'Georgi',
-    married: false
-}).save();
+exampleTask.save()
+    .then(result => {
+        console.log(result);
+    })
+    .catch(error => {
+        console.log(error);
+    });
