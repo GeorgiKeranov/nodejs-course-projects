@@ -14,7 +14,7 @@ app.post('/users', async (req, res) => {
         await user.save();
         res.status(201).send(user);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(500).send(error);
     }
 });
 
@@ -65,7 +65,7 @@ app.patch('/users/:id', async (req, res) => {
         });
     
         if (!user) {
-            return res.status(400).send({
+            return res.status(404).send({
                 error: 'The user is not found'
             });
         }
@@ -76,6 +76,24 @@ app.patch('/users/:id', async (req, res) => {
     }
 });
 
+app.delete('/users/:id', async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const isDeleted = await User.findByIdAndDelete(id);
+    
+        if (!isDeleted) {
+            return res.status(404).send({
+                error: 'User is not found!'
+            });
+        }
+    
+        res.send(isDeleted);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 app.post('/tasks', async (req, res) => {
     const task = new Task(req.body);
 
@@ -83,7 +101,7 @@ app.post('/tasks', async (req, res) => {
         await task.save();
         res.status(201).send(task);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(500).send(error);
     }
 });
 
@@ -134,7 +152,7 @@ app.patch('/tasks/:id', async (req, res) => {
         });
     
         if (!task) {
-            return res.status(400).send({
+            return res.status(404).send({
                 error: 'The task is not found'
             });
         }
@@ -142,6 +160,24 @@ app.patch('/tasks/:id', async (req, res) => {
         res.send(task);
     } catch (error) {
         res.send(error);
+    }
+});
+
+app.delete('/tasks/:id', async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const isDeleted = await Task.findByIdAndDelete(id);
+    
+        if (!isDeleted) {
+            return res.status(404).send({
+                error: 'Task is not found!'
+            });
+        }
+    
+        res.send(isDeleted);
+    } catch (error) {
+        res.status(500).send(error);
     }
 });
 
