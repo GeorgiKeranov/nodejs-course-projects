@@ -14,12 +14,11 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     const db = client.db(databaseName);
     const tasksCollection = db.collection('tasks');
 
-    tasksCollection.updateMany(
-        { completed: false },
-        { $set: { completed: true } }
-    ).then((result) => {
-        console.log(result);
-    }).catch((error) => {
-        console.log(error);
-    })
+    tasksCollection.deleteOne({ description: 'Read a book' })
+        .then((result) => {
+            console.log(result);
+        })
+        .catch((error) => {
+            console.log(error)
+        });
 });
