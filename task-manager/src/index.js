@@ -45,7 +45,7 @@ app.get('/users/:id', async (req, res) => {
     }
 });
 
-app.put('/users/:id', async (req, res) => {
+app.patch('/users/:id', async (req, res) => {
     const allowedProperties = ['name', 'email', 'password', 'age'];
     const updatePropertiesRequest = req.body;
 
