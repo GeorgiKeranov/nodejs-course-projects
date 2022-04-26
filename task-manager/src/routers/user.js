@@ -29,6 +29,9 @@ router.post('/users/login', async (req, res) => {
         const user = await User.findByCredentials(username, password);
         const token = user.generateJsonWebToken();
         
+        user.tokens.push({ token });
+        await user.save();
+
         res.send({user, token});
     } catch (error) {
         res.status(404).send({

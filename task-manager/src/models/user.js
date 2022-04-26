@@ -34,7 +34,12 @@ const userSchema = new mongoose.Schema({
     age: {
         type: Number,
         required: true
-    }
+    },
+    tokens: [{
+        token: {
+            type: String
+        }
+    }]
 });
 
 userSchema.pre('save', hashPasswordBeforeUserSave);

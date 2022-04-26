@@ -3,15 +3,17 @@ const User = require('../models/user');
 
 async function authenticate(req, res, next) {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '');
+        let token = req.header('Authorization');
 
         if (!token) {
             throw new Error();
         }
 
+        token = token.replace('Bearer ', '');
+
         const tokenData = jwt.verify(token, 'YOUR_SECRET_KEY_HERE');
 
-        const authenticatedUser = await User.findById(tokenData._id);
+        const authenticatedUser = await User.findOne({ _id: tokenData._id, 'tokens.token': token });
         
         if (!authenticatedUser) {
             throw new Error();
@@ -21,8 +23,6 @@ async function authenticate(req, res, next) {
 
         next();
     } catch (error) {
-        console.log(error);
-
         res.send({
             error: 'Please provide a valid authorization token!'
         });
