@@ -80,25 +80,8 @@ router.get('/users/profile', authenticate, async (req, res) => {
     res.send(req.authenticatedUser);
 });
 
-router.get('/users/:id', async (req, res) => {
-    const id = req.params.id;
-
-    try {
-        const user = await User.findById(id);
-
-        if (!user) {
-            return res.status(404).send({
-                error: 'User is not found!'
-            });
-        }
-
-        res.send(user);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-});
-
-router.patch('/users/:id', async (req, res) => {
+router.patch('/users/profile', authenticate, async (req, res) => {
+    // Check if only the allowed properties are in the request
     const allowedProperties = ['name', 'email', 'password', 'age'];
     const updatePropertiesRequest = req.body;
     const notAllowedProperties = [];
@@ -108,6 +91,7 @@ router.patch('/users/:id', async (req, res) => {
         }
     }
 
+    // If there are not allowed properties in the request send error with their names
     if (notAllowedProperties.length) {
         return res.status(400).send({
             error: 'There are properties that are not allowed to be updated!',
@@ -115,41 +99,28 @@ router.patch('/users/:id', async (req, res) => {
         });
     }
 
-    const id = req.params.id;
     try {
-        const user = await User.findById(id);
-        
-        if (!user) {
-            return res.status(404).send({
-                error: 'The user is not found'
-            });
-        }
+        const authenticatedUser = req.authenticatedUser;
 
         for (propertyName in updatePropertiesRequest) {
-            user[propertyName] = updatePropertiesRequest[propertyName];
+            authenticatedUser[propertyName] = updatePropertiesRequest[propertyName];
         }
         
-        await user.save();
+        await authenticatedUser.save();
 
-        res.send(user);
+        res.send(authenticatedUser);
     } catch (error) {
-        res.send(error);
+        res.status(500).send(error);
     }
 });
 
-router.delete('/users/:id', async (req, res) => {
-    const id = req.params.id;
-
+router.delete('/users/profile', authenticate, async (req, res) => {
     try {
-        const isDeleted = await User.findByIdAndDelete(id);
-    
-        if (!isDeleted) {
-            return res.status(404).send({
-                error: 'User is not found!'
-            });
-        }
-    
-        res.send(isDeleted);
+        req.authenticatedUser.remove();
+        
+        res.send({
+            message: 'Your profile is deleted successfully!'
+        });
     } catch (error) {
         res.status(500).send(error);
     }
