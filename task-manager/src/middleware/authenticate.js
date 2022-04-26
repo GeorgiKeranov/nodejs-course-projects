@@ -19,6 +19,7 @@ async function authenticate(req, res, next) {
             throw new Error();
         }
 
+        req.tokenForAuthentication = token;
         req.authenticatedUser = authenticatedUser;
 
         next();

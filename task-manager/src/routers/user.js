@@ -40,6 +40,26 @@ router.post('/users/login', async (req, res) => {
     }
 });
 
+router.post('/users/logout', authenticate, async (req, res) => {
+    const tokenForAuthentication = req.tokenForAuthentication;
+    const authenticatedUser = req.authenticatedUser;
+
+    authenticatedUser.tokens = authenticatedUser.tokens.filter(tokenObj => {
+        return tokenObj.token !== tokenForAuthentication;
+    });
+    
+    try {
+        await authenticatedUser.save();
+        res.send({
+            'message': 'You have been logged out successfully!'
+        });
+    } catch (error) {
+        res.status(500).send({
+            error: 'Error, please try again later!'
+        });
+    }
+});
+
 router.get('/users/profile', authenticate, async (req, res) => {
     res.send(req.authenticatedUser);
 });
