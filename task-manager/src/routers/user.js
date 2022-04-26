@@ -60,6 +60,22 @@ router.post('/users/logout', authenticate, async (req, res) => {
     }
 });
 
+router.post('/users/logoutAllDevices', authenticate, async (req, res) => {
+    const authenticatedUser = req.authenticatedUser;
+    authenticatedUser.tokens = [];
+    
+    try {
+        await authenticatedUser.save();
+        res.send({
+            'message': 'You have been logged out from all devices successfully!'
+        });
+    } catch (error) {
+        res.status(500).send({
+            error: 'Error, please try again later!'
+        });
+    }
+});
+
 router.get('/users/profile', authenticate, async (req, res) => {
     res.send(req.authenticatedUser);
 });
