@@ -81,6 +81,14 @@ userSchema.methods.generateJsonWebToken = function() {
     return token;
 };
 
+userSchema.methods.toJSON = function() {
+    const user = this.toObject();
+    delete user.password;
+    delete user.tokens;
+
+    return user;
+};
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
