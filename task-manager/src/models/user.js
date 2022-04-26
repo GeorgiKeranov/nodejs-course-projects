@@ -36,10 +36,11 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-userSchema.pre('save', hashPassword);
-userSchema.pre('updateOne', hashPassword);
+userSchema.pre('save', hashPasswordBeforeUserSave);
+userSchema.pre('updateOne', hashPasswordBeforeUserSave);
 
-async function hashPassword(next) {
+// Hash the plain text password before user is saved to the database
+async function hashPasswordBeforeUserSave(next) {
     const user = this;
 
     if (user.isModified('password')) {
@@ -47,6 +48,22 @@ async function hashPassword(next) {
     }
 
     next();
+}
+
+userSchema.statics.findByCredentials = async (username, password) => {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+        throw new Error('Bad credentials, please make sure that your username and password are correct!');
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordCorrect) {
+        throw new Error('Bad credentials, please make sure that your username and password are correct!');
+    }
+
+    return user;
 }
 
 const User = mongoose.model('User', userSchema);

@@ -14,6 +14,26 @@ router.post('/users', async (req, res) => {
     }
 });
 
+router.post('/users/login', async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    if (!username || !password) {
+        return res.status(400).send({
+            error: 'Please provide username and password!'
+        });
+    }
+
+    try {
+        const user = await User.findByCredentials(username, password);
+        res.send(user);
+    } catch (error) {
+        res.status(404).send({
+            error: error.message
+        });
+    }
+});
+
 router.get('/users', async (req, res) => {
     try {
         const users = await User.find({});
