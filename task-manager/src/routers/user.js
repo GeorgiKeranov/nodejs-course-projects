@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/user');
 const authenticate = require('../middleware/authenticate');
+const imageUploadMiddleware = require('../middleware/image-upload');
 
 const router = new express.Router();
 
@@ -124,6 +125,12 @@ router.delete('/users/profile', authenticate, async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
+});
+
+router.post('/users/profile/avatar', authenticate, imageUploadMiddleware, async (req, res) => {
+    res.send('Success!');
+}, (err, req, res, next) => {
+    res.status(400).send({ error: err.message });
 });
 
 module.exports = router;
