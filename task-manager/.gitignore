@@ -1,2 +1,2 @@
 # Local files that are uploaded to the application
-public/uploads
+public/uploads/*
