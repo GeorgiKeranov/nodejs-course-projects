@@ -18,7 +18,7 @@ const imageUpload = multer({
         const fileName = file.originalname;
         
         if (!fileName.match(/.(jpg|jpeg|png|webp)$/)) {
-            cb(new Error('Please provide image with allowed extension like ".jpg", ".jpeg", ".png" or ".webp".'));
+            return cb(new Error('Please provide image with allowed extension like ".jpg", ".jpeg", ".png" or ".webp".'));
         }
         
         cb(null, true);
