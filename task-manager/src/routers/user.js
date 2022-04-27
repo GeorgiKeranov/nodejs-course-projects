@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const User = require('../models/user');
 const authenticate = require('../middleware/authenticate');
@@ -128,7 +130,37 @@ router.delete('/users/profile', authenticate, async (req, res) => {
 });
 
 router.post('/users/profile/avatar', authenticate, imageUploadMiddleware, async (req, res) => {
-    res.send('Success!');
+    const file = req.file;
+    
+    if (!file) {
+        return res.status(400).send({
+            error: 'Please attach image with name "image" to the request!'
+        });
+    }
+
+    try {
+        const authenticatedUser = req.authenticatedUser;
+
+        // Check if the user has already an avatar
+        if (authenticatedUser.avatar) {
+            const uploadsDirectory = path.join(__dirname, '../../public/uploads/');
+            const avatarImagePath = uploadsDirectory + authenticatedUser.avatar;
+            
+            if (fs.existsSync(avatarImagePath)) {
+                fs.unlinkSync(avatarImagePath);
+            }
+        }
+
+        authenticatedUser.avatar = file.filename;
+        await authenticatedUser.save();
+        
+        res.send({
+            message: 'Image is saved successfully!'
+        });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+
 }, (err, req, res, next) => {
     res.status(400).send({ error: err.message });
 });
