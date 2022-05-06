@@ -24,7 +24,7 @@ async function authenticate(req, res, next) {
 
         next();
     } catch (error) {
-        res.send({
+        res.status(401).send({
             error: 'Please provide a valid authorization token!'
         });
     }
