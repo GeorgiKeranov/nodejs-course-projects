@@ -1,2 +1,5 @@
 # Local files that are uploaded to the application
 public/uploads/*
+
+# Config folder
+config

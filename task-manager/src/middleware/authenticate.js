@@ -11,7 +11,7 @@ async function authenticate(req, res, next) {
 
         token = token.replace('Bearer ', '');
 
-        const tokenData = jwt.verify(token, 'YOUR_SECRET_KEY_HERE');
+        const tokenData = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
         const authenticatedUser = await User.findOne({ _id: tokenData._id, 'tokens.token': token });
         
