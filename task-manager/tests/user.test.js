@@ -67,6 +67,17 @@ test('Should not get profile for unauthenticated user', async () => {
         .expect(401);
 });
 
+test('Should upload profile image for unauthenticated user', async () => {
+    await request(app)
+        .post('/users/profile/avatar')
+        .set('Authorization', `Bearer ${testUser.tokens[0].token}`)
+        .attach('image', 'tests/fixtures/placeholder-image.png')
+        .expect(200);
+
+    const user = await User.findById(testUser._id);
+    expect(user.avatar).toBeTruthy();
+});
+
 test('Should delete profile for authenticated user', async () => {
     await request(app)
         .delete('/users/profile')
