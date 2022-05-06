@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../src/app');
 const User = require('../src/models/user');
-const { testUser, setupDatabase, closeDatabase } = require('./fixtures/db');
+const { testUsers, setupDatabase, closeDatabase } = require('./fixtures/db');
 
 beforeEach(setupDatabase);
 
@@ -28,8 +28,8 @@ test('Should login existing user', async () => {
     await request(app)
         .post('/users/login')
         .send({
-            username: testUser.username,
-            password: testUser.password
+            username: testUsers[0].username,
+            password: testUsers[0].password
         })
         .expect(200);
 });
@@ -47,7 +47,7 @@ test('Should not login nonexisting user', async () => {
 test('Should get profile for authenticated user', async () => {
     await request(app)
         .get('/users/profile')
-        .set('Authorization', `Bearer ${testUser.tokens[0].token}`)
+        .set('Authorization', `Bearer ${testUsers[0].tokens[0].token}`)
         .send()
         .expect(200);
 });
@@ -62,20 +62,20 @@ test('Should not get profile for unauthenticated user', async () => {
 test('Should update valid user fields', async () => {
     await request(app)
         .patch('/users/profile')
-        .set('Authorization', `Bearer ${testUser.tokens[0].token}`)
+        .set('Authorization', `Bearer ${testUsers[0].tokens[0].token}`)
         .send({
             name: 'Ivan'
         })
         .expect(200);
 
-    const user = await User.findById(testUser._id);
+    const user = await User.findById(testUsers[0]._id);
     expect(user.name).toBe('Ivan');
 });
 
 test('Should not update invalid user fields', async () => {
     await request(app)
         .patch('/users/profile')
-        .set('Authorization', `Bearer ${testUser.tokens[0].token}`)
+        .set('Authorization', `Bearer ${testUsers[0].tokens[0].token}`)
         .send({
             category: 'Example'
         })
@@ -85,18 +85,18 @@ test('Should not update invalid user fields', async () => {
 test('Should upload profile image for user', async () => {
     await request(app)
         .post('/users/profile/avatar')
-        .set('Authorization', `Bearer ${testUser.tokens[0].token}`)
+        .set('Authorization', `Bearer ${testUsers[0].tokens[0].token}`)
         .attach('image', 'tests/fixtures/placeholder-image.png')
         .expect(200);
 
-    const user = await User.findById(testUser._id);
+    const user = await User.findById(testUsers[0]._id);
     expect(user.avatar).toBeTruthy();
 });
 
 test('Should delete profile for user', async () => {
     await request(app)
         .delete('/users/profile')
-        .set('Authorization', `Bearer ${testUser.tokens[0].token}`)
+        .set('Authorization', `Bearer ${testUsers[0].tokens[0].token}`)
         .send()
         .expect(200);
 });
