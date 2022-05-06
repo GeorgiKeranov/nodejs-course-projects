@@ -54,6 +54,8 @@ async function setupDatabase() {
     await Task.deleteMany();
 
     for (task of testTasks) {
+        task._id = new mongoose.Types.ObjectId();
+
         await new Task(task).save();
     }
 }
