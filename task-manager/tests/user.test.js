@@ -67,7 +67,30 @@ test('Should not get profile for unauthenticated user', async () => {
         .expect(401);
 });
 
-test('Should upload profile image for unauthenticated user', async () => {
+test('Should update valid user fields', async () => {
+    await request(app)
+        .patch('/users/profile')
+        .set('Authorization', `Bearer ${testUser.tokens[0].token}`)
+        .send({
+            name: 'Ivan'
+        })
+        .expect(200);
+
+    const user = await User.findById(testUser._id);
+    expect(user.name).toBe('Ivan');
+});
+
+test('Should not update invalid user fields', async () => {
+    await request(app)
+        .patch('/users/profile')
+        .set('Authorization', `Bearer ${testUser.tokens[0].token}`)
+        .send({
+            category: 'Example'
+        })
+        .expect(400);
+});
+
+test('Should upload profile image for user', async () => {
     await request(app)
         .post('/users/profile/avatar')
         .set('Authorization', `Bearer ${testUser.tokens[0].token}`)
@@ -78,7 +101,7 @@ test('Should upload profile image for unauthenticated user', async () => {
     expect(user.avatar).toBeTruthy();
 });
 
-test('Should delete profile for authenticated user', async () => {
+test('Should delete profile for user', async () => {
     await request(app)
         .delete('/users/profile')
         .set('Authorization', `Bearer ${testUser.tokens[0].token}`)
