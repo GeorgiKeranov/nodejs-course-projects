@@ -13,10 +13,15 @@ const io = socketio(server);
 io.on('connection', (socket) => {
     console.log('New WebSocket connection');
 
-    socket.emit('welcomeMessage', 'Welcome!');
+    socket.emit('message', 'Welcome!');
+    socket.broadcast.emit('message', 'New user is connected!');
 
     socket.on('sendMessage', (message) => {
-        io.emit('newMessage', message);
+        io.emit('message', message);
+    });
+
+    socket.on('disconnect', () => {
+        io.emit('message', 'A user has been disconnected');
     });
 });
 
