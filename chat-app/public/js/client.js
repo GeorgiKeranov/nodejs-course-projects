@@ -1,9 +1,17 @@
 const socket = io();
 
-socket.on('countUpdated', (count) => {
-    console.log(`Current count is ${count}`);
+socket.on('welcomeMessage', (message) => {
+    console.log(message);
 });
 
-document.querySelector('.btn-increment').addEventListener('click', () => {
-    socket.emit('increment');
+const formSubmitButton = document.querySelector('#message-form input[type="submit"]');
+formSubmitButton.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const message = document.querySelector('#message-form input[name="message"]').value;
+    socket.emit('sendMessage', message);
 });
+
+socket.on('newMessage', (message) => {
+    console.log(message);
+})

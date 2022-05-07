@@ -10,16 +10,13 @@ app.use(express.static(publicDirectory));
 const server = http.createServer(app);
 const io = socketio(server);
 
-let count = 0;
-
 io.on('connection', (socket) => {
     console.log('New WebSocket connection');
 
-    socket.emit('countUpdated', count);
+    socket.emit('welcomeMessage', 'Welcome!');
 
-    socket.on('increment', () => {
-        count++;
-        io.emit('countUpdated', count);
+    socket.on('sendMessage', (message) => {
+        io.emit('newMessage', message);
     });
 });
 
