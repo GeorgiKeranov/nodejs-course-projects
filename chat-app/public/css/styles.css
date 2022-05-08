@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial;
+}
+
+p {
+    margin-bottom: 5px;
+}
+
+.chat {
+    display: flex;
+    height: 100vh;
+}
+
+.chat .chat__sidebar {
+    flex: 1 1 20%;
+    background-color: #112033;
+}
+
+.chat .chat__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    flex: 1 1 80%;
+}
+
+.chat .chat__messages {
+    overflow-y: scroll;
+    height: 100%;
+    margin-bottom: 20px;
+}
+
+.chat .chat__messages::-webkit-scrollbar {
+    width: 5px;
+}
+
+.chat .chat__messages::-webkit-scrollbar-thumb {
+    background-color: #112033;
+    border-radius: 20px;
+    border: 3px solid #112033;
+}
+
+.chat .chat__message {
+    margin-bottom: 20px;
+}
+
+.chat .chat__message small {
+    color: gray;
+    margin-left: 20px;
+}
+
+.chat .chat__actions {
+    display: flex;
+    align-items: center;
+}
+
+.chat .chat__actions form {
+    display: flex;
+    flex-grow: 1;
+    margin-bottom: 0;
+}
+
+.chat .chat__actions input,
+.chat .chat__actions button {
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+
+.chat .chat__actions input[type="text"] {
+    flex-grow: 1;
+    border: 1px solid gray;
+}
+
+.chat .chat__actions input[type="submit"],
+.chat .chat__actions button {
+    margin-left: 10px;
+    background-color: #112033;
+    border: 1px solid #112033;
+    color: #fff;
+    transition: .3s;
+}
+
+.chat .chat__actions input[type="submit"]:hover,
+.chat .chat__actions button:hover {
+    background-color: #fff;
+    color: #112033;
+    cursor: pointer;
+}
+
+
+.chat .chat__actions input[type="submit"]:disabled,
+.chat .chat__actions button:disabled {
+    opacity: .5;
+    background-color: #112033;
+    color: #fff;
+    cursor: default;
+}

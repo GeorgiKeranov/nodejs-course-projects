@@ -6,7 +6,12 @@ const $messagesContainer = document.querySelector('#messages-container');
 
 const socket = io();
 
-const messageTemplate = '<div><p><small>__DATE__</small> __MESSAGE__</p></div>';
+const messageTemplate = 
+    `<div class="chat__message">
+        <p><strong>Author</strong> <small>__DATE__</small></p>
+        <p>__MESSAGE__</p>
+    </div>`;
+
 socket.on('message', (message) => {
     let messageHTML = messageTemplate.replace('__MESSAGE__', message.message);
 
