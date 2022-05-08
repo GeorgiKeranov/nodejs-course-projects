@@ -6,11 +6,15 @@
     <body>
         <h1>Chat App!</h1>
 
+        <div id="messages-container"></div>
+
         <form id="message-form">
             <input type="text" name="message" placeholder="Type your message here">
 
             <input type="submit" value="Send">
         </form>
+
+        <button id="send-location">Send Location</button>
 
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/client.js"></script>

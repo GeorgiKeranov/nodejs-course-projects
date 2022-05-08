@@ -17,7 +17,17 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('message', 'New user is connected!');
 
     socket.on('sendMessage', (message, callback) => {
-        io.emit('message', message);
+        io.emit('message', escapeHtml(message));
+
+        callback();
+    });
+
+    socket.on('sendLocation', (lat, lng, callback) => {
+        const url = `https://www.google.com/maps/place/${lat},${lng}`;
+
+        const link = `<a href="${url}" target="_blank">My location</a>`;
+        
+        io.emit('message', link);
 
         callback();
     });
@@ -30,3 +40,12 @@ io.on('connection', (socket) => {
 server.listen(3000, () => {
     console.log('Server is running');
 });
+
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
