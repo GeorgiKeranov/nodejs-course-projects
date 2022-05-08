@@ -6,10 +6,13 @@ const $messagesContainer = document.querySelector('#messages-container');
 
 const socket = io();
 
-const messageTemplate = '<div><p>__MESSAGE__</p></div>';
+const messageTemplate = '<div><p><small>__DATE__</small> __MESSAGE__</p></div>';
 socket.on('message', (message) => {
-    const messageHTML = messageTemplate.replace('__MESSAGE__', message);
-    
+    let messageHTML = messageTemplate.replace('__MESSAGE__', message.message);
+
+    let formatedDate = new Date(message.date).toLocaleString();
+    messageHTML = messageHTML.replace('__DATE__', formatedDate);
+
     $messagesContainer.innerHTML += messageHTML;
 });
 
