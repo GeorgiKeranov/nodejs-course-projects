@@ -132,15 +132,14 @@ p {
     margin-bottom: 0;
 }
 
-.join-chat .join-chat__field label {
-    margin-bottom: 5px;
-    color: #5e5e5e;
-}
-
 .join-chat .join-chat__field input {
     padding: 12px;
-    font-size: 16px;
+    font-size: 15px;
     border: 0;
+}
+
+.join-chat .join-chat__field input[type="text"]:focus-visible {
+    outline: none;
 }
 
 .join-chat .join-chat__field input[type="submit"] {
