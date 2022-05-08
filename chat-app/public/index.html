@@ -4,6 +4,32 @@
     </head>
 
     <body>
-        
+        <div class="join-chat">
+            <div class="join-chat__center">
+                <div class="join-chat__header">
+                    <h1>Join Chat Room</h1>
+                </div>
+                
+                <div class="join-chat__body">
+                    <form action="/chat.html" method="GET">
+                        <div class="join-chat__field">
+                            <label for="display-name">Display name</label>
+
+                            <input type="text" name="display-name" placeholder="Type your name here">
+                        </div>
+
+                        <div class="join-chat__field">
+                            <label for="room-name">Room name</label>
+
+                            <input type="text" name="room-name" placeholder="Type room name here">
+                        </div>
+
+                        <div class="join-chat__field">
+                            <input type="submit" value="Join">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

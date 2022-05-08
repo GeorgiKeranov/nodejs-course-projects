@@ -102,3 +102,58 @@ p {
     color: #fff;
     cursor: default;
 }
+
+.join-chat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #112033;
+    height: 100vh;
+}
+
+.join-chat .join-chat__center {
+    max-width: 500px;
+    background-color: #f1f1f1;
+    padding: 30px;
+}
+
+.join-chat .join-chat__header {
+    margin-bottom: 20px;
+    color: #112033;
+}
+
+.join-chat .join-chat__field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.join-chat .join-chat__field:last-child {
+    margin-bottom: 0;
+}
+
+.join-chat .join-chat__field label {
+    margin-bottom: 5px;
+    color: #5e5e5e;
+}
+
+.join-chat .join-chat__field input {
+    padding: 12px;
+    font-size: 16px;
+    border: 0;
+}
+
+.join-chat .join-chat__field input[type="submit"] {
+    padding: 10px 12px;
+    background-color: #112033;
+    border: 2px solid #112033;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.join-chat .join-chat__field input[type="submit"]:hover {
+    background-color: #fff;
+    color: #112033;
+}
