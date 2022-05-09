@@ -2,7 +2,6 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
-const { escapeHtml } = require('./utils/escape');
 const { generateMessage } = require('./utils/message');
 const { saveUser, getUser, getUsersByRoom, removeUser } = require('./utils/users');
 
@@ -36,7 +35,7 @@ io.on('connection', (socket) => {
         }
         
         const user = getUser(socket.id);
-        const generatedMessage = generateMessage(escapeHtml(message), user.usernameOriginal);
+        const generatedMessage = generateMessage(message, user.usernameOriginal);
 
         io.to(user.room).emit('message', generatedMessage);
 

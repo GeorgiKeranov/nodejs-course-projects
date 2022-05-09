@@ -37,7 +37,7 @@ const notificationTemplate =
     </div>`;
 
 socket.on('notification', (notification) => {
-    const messageHTML = notificationTemplate.replace('__MESSAGE__', notification);
+    const messageHTML = notificationTemplate.replace('__MESSAGE__', escapeHTML(notification));
 
     $messagesContainer.innerHTML += messageHTML;
 });
@@ -49,8 +49,8 @@ const messageTemplate =
     </div>`;
 
 socket.on('message', (message) => {
-    let messageHTML = messageTemplate.replace('__MESSAGE__', message.message);
-    messageHTML = messageHTML.replace('__AUTHOR__', message.author);
+    let messageHTML = messageTemplate.replace('__MESSAGE__', escapeHTML(message.message));
+    messageHTML = messageHTML.replace('__AUTHOR__', escapeHTML(message.author));
 
     let formatedDate = new Date(message.date).toLocaleString();
     messageHTML = messageHTML.replace('__DATE__', formatedDate);
@@ -91,3 +91,13 @@ $sendLocationButton.addEventListener('click', function() {
         });
     });
 });
+
+function escapeHTML(unsafe_str) {
+    return unsafe_str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\"/g, '&quot;')
+      .replace(/\'/g, '&#39;')
+      .replace(/\//g, '&#x2F;')
+}
