@@ -1,3 +1,5 @@
+const $chatTitle = document.querySelector('.chat .chat__heading h1');
+const $usersList = document.querySelector('.chat .chat__users ul');
 const $messageForm = document.querySelector('#message-form');
 const $messageFormInput = $messageForm.querySelector('input[name="message"]');
 const $messageFormSubmitInput = $messageForm.querySelector('input[type="submit"]');
@@ -7,7 +9,24 @@ const $messagesContainer = document.querySelector('#messages-container');
 const socket = io();
 
 const urlParams = new URLSearchParams(location.search);
-socket.emit('joinRoom', urlParams.get('username'), urlParams.get('room'), (error) => {
+const username = urlParams.get('username');
+const room = urlParams.get('room');
+
+$chatTitle.textContent = room;
+
+socket.on('updateActiveUsers', (users) => {
+    $usersList.innerHTML = '';
+
+    for (const user of users) {
+        const liElement = document.createElement('li');
+        const userText = document.createTextNode(user.usernameOriginal);
+        liElement.appendChild(userText);
+
+        $usersList.appendChild(liElement);
+    }
+});
+
+socket.emit('joinRoom', username, room, (error) => {
     alert(error);
     location.href = '/';
 });

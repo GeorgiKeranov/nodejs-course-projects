@@ -4,7 +4,7 @@ const express = require('express');
 const socketio = require('socket.io');
 const { escapeHtml } = require('./utils/escape');
 const { generateMessage } = require('./utils/message');
-const { saveUser, getUser, removeUser } = require('./utils/users');
+const { saveUser, getUser, getUsersByRoom, removeUser } = require('./utils/users');
 
 const app = express();
 const publicDirectory = path.join(__dirname, '../public');
@@ -27,6 +27,7 @@ io.on('connection', (socket) => {
 
         socket.emit('notification', `Welcome ${user.usernameOriginal}!`);
         socket.broadcast.to(user.room).emit('notification', `${user.usernameOriginal} has joined!`);
+        io.to(user.room).emit('updateActiveUsers', getUsersByRoom(user.room));
     });
 
     socket.on('sendMessage', (message, callback) => {
@@ -58,6 +59,7 @@ io.on('connection', (socket) => {
 
         if (user) {
             io.to(user.room).emit('notification', `${user.usernameOriginal} has left!`);
+            io.to(user.room).emit('updateActiveUsers', getUsersByRoom(user.room));
         }
     });
 });
