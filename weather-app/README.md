@@ -2,6 +2,15 @@
 
 Simple terminal application that only needs city and country name and gets geographical cordinates from geocode API and then passes these cordinates to weather API in order to get current weather temperature.
 
+## Table of Contents
+- [Technologies Used](#technologies-used)
+- [How to Install](#how-to-install)
+- [How to Use](#how-to-use)
+
+## Technologies Used
+- [chalk](https://www.npmjs.com/package/chalk) - to change colors in the terminal
+- [yargs](https://www.npmjs.com/package/yargs) - to easily handle terminal commands and add descriptions to them
+
 ## How to install
 
 Make sure that you have installed [npm](https://www.npmjs.com/) and [node](https://nodejs.dev/) on your machine.
