@@ -6,14 +6,32 @@ const $messagesContainer = document.querySelector('#messages-container');
 
 const socket = io();
 
+const urlParams = new URLSearchParams(location.search);
+socket.emit('joinRoom', urlParams.get('username'), urlParams.get('room'), (error) => {
+    alert(error);
+    location.href = '/';
+});
+
+const notificationTemplate = 
+    `<div class="chat__notification">
+        <p>__MESSAGE__</p>
+    </div>`;
+
+socket.on('notification', (notification) => {
+    const messageHTML = notificationTemplate.replace('__MESSAGE__', notification);
+
+    $messagesContainer.innerHTML += messageHTML;
+});
+
 const messageTemplate = 
     `<div class="chat__message">
-        <p><strong>Author</strong> <small>__DATE__</small></p>
+        <p><strong>__AUTHOR__</strong> <small>__DATE__</small></p>
         <p>__MESSAGE__</p>
     </div>`;
 
 socket.on('message', (message) => {
     let messageHTML = messageTemplate.replace('__MESSAGE__', message.message);
+    messageHTML = messageHTML.replace('__AUTHOR__', message.author);
 
     let formatedDate = new Date(message.date).toLocaleString();
     messageHTML = messageHTML.replace('__DATE__', formatedDate);

@@ -4,6 +4,7 @@ const express = require('express');
 const socketio = require('socket.io');
 const { escapeHtml } = require('./utils/escape');
 const { generateMessage } = require('./utils/message');
+const { saveUser, getUser, removeUser } = require('./utils/users');
 
 const app = express();
 const publicDirectory = path.join(__dirname, '../public');
@@ -15,27 +16,49 @@ const io = socketio(server);
 io.on('connection', (socket) => {
     console.log('New WebSocket connection');
 
-    socket.emit('message', generateMessage('Welcome!'));
-    socket.broadcast.emit('message', generateMessage('New user is connected!'));
+    socket.on('joinRoom', (username, room, errorCallback) => {
+        const { error, user } = saveUser(socket.id, username, room);
+
+        if (error) {
+            return errorCallback(error);
+        }
+
+        socket.join(user.room);
+
+        socket.emit('notification', `Welcome ${user.usernameOriginal}!`);
+        socket.broadcast.to(user.room).emit('notification', `${user.usernameOriginal} has joined!`);
+    });
 
     socket.on('sendMessage', (message, callback) => {
-        io.emit('message', generateMessage(escapeHtml(message)));
+        if (!message) {
+            return callback();
+        }
+        
+        const user = getUser(socket.id);
+        const generatedMessage = generateMessage(escapeHtml(message), user.usernameOriginal);
+
+        io.to(user.room).emit('message', generatedMessage);
 
         callback();
     });
 
     socket.on('sendLocation', (lat, lng, callback) => {
         const url = `https://www.google.com/maps/place/${lat},${lng}`;
-
         const link = `<a href="${url}" target="_blank">My location</a>`;
         
-        io.emit('message', generateMessage(link));
+        const user = getUser(socket.id);
+
+        io.to(user.room).emit('message', generateMessage(link, user.usernameOriginal));
 
         callback();
     });
 
     socket.on('disconnect', () => {
-        io.emit('message', generateMessage('A user has been disconnected'));
+        const user = removeUser(socket.id);
+
+        if (user) {
+            io.to(user.room).emit('notification', `${user.usernameOriginal} has left!`);
+        }
     });
 });
 
