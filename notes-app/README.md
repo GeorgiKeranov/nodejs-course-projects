@@ -2,7 +2,18 @@
 
 Simple application that have different terminal commands to save, remove, read or list notes. The application saves the data into JSON file.
 
-## How to install
+## Table of Contents
+- [Technologies Used](#technologies-used)
+- [How to Install](#how-to-install)
+- [How to Use](#how-to-use)
+- [Commands](#commands)
+- [Example Commands](#example-commands)
+
+## Technologies Used
+- [chalk](https://www.npmjs.com/package/chalk) - to change colors in the terminal
+- [yargs](https://www.npmjs.com/package/yargs) - to easily handle terminal commands and add descriptions to them
+
+## How to Install
 
 Make sure that you have installed [npm](https://www.npmjs.com/) and [node](https://nodejs.dev/) on your machine.
 
@@ -10,7 +21,7 @@ Make sure that you have installed [npm](https://www.npmjs.com/) and [node](https
 2. Type 'npm install' and wait till all of the packages are installed.
 
 
-## How to use
+## How to Use
 
 1. Open terminal in 'notes-app' directory.
 2. Type 'node app.js --help' to view all of the available commands.
@@ -39,7 +50,7 @@ Options:
   --note     The note that you want to add                   [string] [required]
 ```
 
-## Example commands
+## Example Commands
 
 ### Add a new note.
 ```
