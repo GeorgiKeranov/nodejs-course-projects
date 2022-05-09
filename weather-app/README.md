@@ -1,6 +1,6 @@
 # Weather App
 
-Simple terminal application that only needs city and country name and gets geographical cordinates from geocode API and then passes these cordinates to weather API in order to get current weather temperature. You can read more about this application and view it from [here](/weather-app).
+Simple terminal application that only needs city and country name and gets geographical cordinates from geocode API and then passes these cordinates to weather API in order to get current weather temperature.
 
 ## How to install
 
