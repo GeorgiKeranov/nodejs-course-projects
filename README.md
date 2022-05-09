@@ -1,33 +1,28 @@
-# Node.js Projects
-
-Projects that I have created following this [Node.js course](https://www.udemy.com/course/the-complete-nodejs-developer-course-2/). Through this projects I have used Node.js, Express, MongoDB, Mongoose, Jest, Handlebars.js, Bcrypt, JSON Web Tokens, etc.
-
-## Projects
-- [Notes App](#notes-app)
-- [Weather App](#weather-app)
-- [Weather App Web](#weather-app-web)
-- [Task Manager](#task-manager)
-- [Chat App](#chat-app)
-
-## Notes App
-
-Simple application that have different terminal commands to save, remove, read or list notes. The application saves the data into JSON file. You can read more about this application and view it from [here](/chat-app).
-
-
-## Weather App
+# Weather App
 
 Simple terminal application that only needs city and country name and gets geographical cordinates from geocode API and then passes these cordinates to weather API in order to get current weather temperature. You can read more about this application and view it from [here](/weather-app).
 
+## How to install
 
-## Weather App Web
+Make sure that you have installed [npm](https://www.npmjs.com/) and [node](https://nodejs.dev/) on your machine.
 
-Simple web application that uses geocode and weather API functionalities from [Weather App](#weather-app) built with Express and Handlebars.js. You can read more about this application and view it from [here](/weather-app-web).
+1. Clone the project and open 'weather-app' directory in terminal.
+2. Type 'npm install' and wait till all of the packages are installed.
+3. Create new folder in 'weather-app' directory with name 'config'.
+4. Add new file with 'dev.env' name in the directory 'weather-app/config/'.
+5. Register with free plans for [Weatherstack](https://weatherstack.com/) and [Mapbox](https://www.mapbox.com/) and generate API keys from them.
+6. In the new file 'dev.env' you have to type your WEATHERSTACK_ACCESS_KEY and MAPBOX_ACCESS_TOKEN. 
+7. Example of dev.env file contents:
+```
+WEATHERSTACK_ACCESS_KEY=TYPE_YOUR_KEY_HERE
+MAPBOX_ACCESS_TOKEN=TYPE_YOUR_KEY_HERE
+```
 
-## Task Manager
+## How to use
 
-Task manager rest API that is built with Express, MongoDB, Mongoose. Users can register and login then they are authenticated by JSON Web Tokens. Authenticated users can update their profile, upload images, logout from all devices, create a task, update a task, read all tasks and remove a task. Also the project has automated tests and they use Jest. You can read more about this application and view it from [here](/task-manager).
-
-## Chat App
-
-Chat app that uses Express and Socket.io for real time chat application with WebSockets. The chat application can have multiple rooms that users can join and send messages to all of the users that are in the same room. Users can send their location to all users in the chat room easily with a button. You can read more about this application and view it from [here](/chat-app).
-
+1. Open terminal in 'weather-app' directory.
+2. Type 'npm run dev (And here add city and country separated by space)', for example:
+```
+npm run dev London United Kingdom
+```
+3. Success, you will see the temperature message in the console.
