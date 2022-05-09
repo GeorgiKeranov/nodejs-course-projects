@@ -1,6 +1,6 @@
 # Notes App
 
-Simple application that have different terminal commands to save, remove, read or list notes. The application saves the data into JSON file. You can read more about this application and view it from [here](/chat-app).
+Simple application that have different terminal commands to save, remove, read or list notes. The application saves the data into JSON file.
 
 ## How to install
 
