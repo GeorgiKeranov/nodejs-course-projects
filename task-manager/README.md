@@ -10,7 +10,7 @@ Task manager rest API that is built with Express, MongoDB, Mongoose. Users can r
 
 ## Technologies Used
 
-- Express
+- [Express](https://www.npmjs.com/package/express)
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 - [mongoose](https://www.npmjs.com/package/mongoose)
 - [multer](https://www.npmjs.com/package/multer)
