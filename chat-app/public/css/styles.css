@@ -55,6 +55,12 @@ p {
     margin-left: 20px;
 }
 
+.chat .chat__notification {
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #167dff;
+}
+
 .chat .chat__actions {
     display: flex;
     align-items: center;
