@@ -10,7 +10,7 @@ Simple web application that uses geocode and weather API functionalities from [W
 
 ## Technologies Used
 
-- Express - to change colors in the terminal
+- Express
 - [hbs](https://www.npmjs.com/package/hbs) - Express view engine for Handlebars.js
 - [request](https://www.npmjs.com/package/request) - to make HTTP requests easily
 - [env-cmd](https://www.npmjs.com/package/env-cmd) - program for executing commands using an environment from an env file
