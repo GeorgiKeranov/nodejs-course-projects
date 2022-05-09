@@ -1,6 +1,6 @@
 # Task Manager
 
-Task manager REST API that is built with Express, MongoDB, Mongoose. Users can register and login then they are authenticated by JSON Web Tokens. Authenticated users can update their profile, upload images, logout from all devices, create a task, update a task, read all tasks and remove a task. Also the project has automated tests and they use Jest
+Task manager REST API that is built with Express, MongoDB, Mongoose. Users can register and login then they are authenticated by JSON Web Tokens. Authenticated users can update their profile, upload images, logout from all devices, create a task, update a task, read all tasks and remove a task. Also the project has automated tests and they use Jest.
 
 ## Table of Contents
 

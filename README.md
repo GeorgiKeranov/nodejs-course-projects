@@ -25,7 +25,7 @@ Simple web application that uses geocode and weather API functionalities from [W
 
 ## Task Manager
 
-Task manager rest API that is built with Express, MongoDB, Mongoose. Users can register and login then they are authenticated by JSON Web Tokens. Authenticated users can update their profile, upload images, logout from all devices, create a task, update a task, read all tasks and remove a task. Also the project has automated tests and they use Jest. You can read more about this application and view it from [here](/task-manager).
+Task manager REST API that is built with Express, MongoDB, Mongoose. Users can register and login then they are authenticated by JSON Web Tokens. Authenticated users can update their profile, upload images, logout from all devices, create a task, update a task, read all tasks and remove a task. Also the project has automated tests and they use Jest. You can read more about this application and view it from [here](/task-manager).
 
 ## Chat App
 
