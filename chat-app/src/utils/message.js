@@ -3,9 +3,9 @@ function generateMessage(message, author) {
         message,
         author,
         date: new Date().getTime()
-    }
+    };
 }
 
 module.exports = {
-    generateMessage
+    generateMessage,
 };

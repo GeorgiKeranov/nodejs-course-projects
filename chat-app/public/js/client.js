@@ -62,6 +62,24 @@ socket.on('message', (message) => {
     autoScrollMessages();
 });
 
+const locationMessageTemplate = 
+    `<div class="chat__message">
+        <p><strong>__AUTHOR__</strong> <small>__DATE__</small></p>
+        <p><a href="__LINK__" target="_blank">My location</a></p>
+    </div>`;
+
+socket.on('location', (message) => {
+    let messageHTML = locationMessageTemplate.replace('__LINK__', message.message);
+    messageHTML = messageHTML.replace('__AUTHOR__', escapeHTML(message.author));
+
+    let formatedDate = new Date(message.date).toLocaleString();
+    messageHTML = messageHTML.replace('__DATE__', formatedDate);
+
+    $messagesContainer.innerHTML += messageHTML;
+
+    autoScrollMessages();
+});
+
 $messageForm.addEventListener('submit', (e) => {
     e.preventDefault();
 

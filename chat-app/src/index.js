@@ -44,11 +44,10 @@ io.on('connection', (socket) => {
 
     socket.on('sendLocation', (lat, lng, callback) => {
         const url = `https://www.google.com/maps/place/${lat},${lng}`;
-        const link = `<a href="${url}" target="_blank">My location</a>`;
         
         const user = getUser(socket.id);
 
-        io.to(user.room).emit('message', generateMessage(link, user.usernameOriginal));
+        io.to(user.room).emit('location', generateMessage(url, user.usernameOriginal));
 
         callback();
     });
