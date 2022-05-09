@@ -40,6 +40,8 @@ socket.on('notification', (notification) => {
     const messageHTML = notificationTemplate.replace('__MESSAGE__', escapeHTML(notification));
 
     $messagesContainer.innerHTML += messageHTML;
+    
+    autoScrollMessages();
 });
 
 const messageTemplate = 
@@ -56,6 +58,8 @@ socket.on('message', (message) => {
     messageHTML = messageHTML.replace('__DATE__', formatedDate);
 
     $messagesContainer.innerHTML += messageHTML;
+
+    autoScrollMessages();
 });
 
 $messageForm.addEventListener('submit', (e) => {
@@ -100,4 +104,25 @@ function escapeHTML(unsafe_str) {
       .replace(/\"/g, '&quot;')
       .replace(/\'/g, '&#39;')
       .replace(/\//g, '&#x2F;')
+}
+
+function autoScrollMessages() {
+    const $lastMessage = $messagesContainer.lastElementChild;
+
+    // Get full height including margins of the last message
+    const lastMessageStyles = window.getComputedStyle($lastMessage);
+    const lastMessageMargins = parseInt(lastMessageStyles.marginTop) + parseInt(lastMessageStyles.marginBottom);
+    const lastMessageFullHeight = $lastMessage.offsetHeight + lastMessageMargins;
+
+    // Get the maximum scroll top position that can be on the messages element
+    const messagesMaxScrollTop = $messagesContainer.scrollHeight - $messagesContainer.offsetHeight;
+    // Remove height of the last message
+    const messagesMaxScrollTopWithoutLastMessage = messagesMaxScrollTop - lastMessageFullHeight;
+    // Check if we were at the bottom of the messages before last message was inserted
+    const messagesScrollWasAtTheBottom = messagesMaxScrollTopWithoutLastMessage <= $messagesContainer.scrollTop;
+
+    // Scroll to the bottom
+    if (messagesScrollWasAtTheBottom) {
+        $messagesContainer.scrollTop = messagesMaxScrollTop;
+    }
 }
