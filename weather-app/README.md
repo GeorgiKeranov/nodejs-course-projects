@@ -8,8 +8,8 @@ Simple terminal application that only needs city and country name and gets geogr
 - [How to Use](#how-to-use)
 
 ## Technologies Used
-- [chalk](https://www.npmjs.com/package/chalk) - to change colors in the terminal
-- [yargs](https://www.npmjs.com/package/yargs) - to easily handle terminal commands and add descriptions to them
+- [request](https://www.npmjs.com/package/request) - to make HTTP requests easily
+- [env-cmd](https://www.npmjs.com/package/env-cmd) - program for executing commands using an environment from an env file
 
 ## How to install
 
